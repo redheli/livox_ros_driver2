@@ -295,7 +295,7 @@ void Lddc::InitPointcloud2MsgHeader(PointCloud2& cloud) {
   cloud.point_step = sizeof(LivoxPointXyzrtlt);
 }
 
-bool Lddc::isTagNormal(const &uint8_t point_tag)
+bool Lddc::isTagNormal(const uint8_t& point_tag)
 {
   // get bit 0 and bit 1
   auto bit01 = point_tag & 0x03;
