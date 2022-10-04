@@ -105,7 +105,7 @@ class Lddc final {
   void PublishPclMsg(LidarDataQueue *queue, uint8_t index);
 
   void PublishImuData(LidarImuDataQueue& imu_data_queue, const uint8_t index);
-  bool isTagNormal(const &uint8_t point_tag);
+  bool isTagNormal(const uint8_t& point_tag);
 
   void InitPointcloud2MsgHeader(PointCloud2& cloud);
   void InitPointcloud2Msg(const StoragePacket& pkg, PointCloud2& cloud, uint64_t& timestamp);
