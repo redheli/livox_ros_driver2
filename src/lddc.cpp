@@ -295,6 +295,24 @@ void Lddc::InitPointcloud2MsgHeader(PointCloud2& cloud) {
   cloud.point_step = sizeof(LivoxPointXyzrtlt);
 }
 
+bool Lddc::isTagNormal(const &uint8_t point_tag)
+{
+  // get bit 0 and bit 1
+  auto bit01 = point_tag & 0x03;
+
+  if(bit01 != 0x00){
+    return false;
+  }
+
+  // get bit 2 and bit 3
+  auto bit23 = (point_tag >> 2) & 0x03;
+  if(bit23 != 0x00){
+    return false;
+  }
+
+  return true;
+}
+
 void Lddc::InitPointcloud2Msg(const StoragePacket& pkg, PointCloud2& cloud, uint64_t& timestamp) {
   InitPointcloud2MsgHeader(cloud);
 
@@ -318,6 +336,9 @@ void Lddc::InitPointcloud2Msg(const StoragePacket& pkg, PointCloud2& cloud, uint
 
   std::vector<LivoxPointXyzrtlt> points;
   for (size_t i = 0; i < pkg.points_num; ++i) {
+    if(isTagNormal(pkg.points[i].tag) == false){
+      continue;
+    }
     LivoxPointXyzrtlt point;
     point.x = pkg.points[i].x;
     point.y = pkg.points[i].y;
@@ -328,8 +349,10 @@ void Lddc::InitPointcloud2Msg(const StoragePacket& pkg, PointCloud2& cloud, uint
     point.timestamp = static_cast<double>(pkg.points[i].offset_time);
     points.push_back(std::move(point));
   }
-  cloud.data.resize(pkg.points_num * sizeof(LivoxPointXyzrtlt));
-  memcpy(cloud.data.data(), points.data(), pkg.points_num * sizeof(LivoxPointXyzrtlt));
+  printf("Normal Points =======================%lu\n",(unsigned long)points.size());
+
+  cloud.data.resize(points.size() * sizeof(LivoxPointXyzrtl));
+  memcpy(cloud.data.data(), points.data(), pkg.points_num * sizeof(LivoxPointXyzrtl));
 }
 
 void Lddc::PublishPointcloud2Data(const uint8_t index, const uint64_t timestamp, const PointCloud2& cloud) {
