@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(read_bit)
+project(useful_examples)
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -16,3 +16,9 @@ add_executable(read_bit read_bit.cpp)
 
 
 
+add_executable(read_bag read_bag.cpp)
+
+target_link_libraries(read_bag
+	${Boost_LIBRARY}
+	${catkin_LIBRARIES}
+	)
