@@ -336,9 +336,12 @@ void Lddc::InitPointcloud2Msg(const StoragePacket& pkg, PointCloud2& cloud, uint
 
   std::vector<LivoxPointXyzrtlt> points;
   for (size_t i = 0; i < pkg.points_num; ++i) {
-    if(isTagNormal(pkg.points[i].tag) == false){
-      continue;
-    }
+    //if(isTagNormal(pkg.points[i].tag) == false){
+      //continue;
+    //}
+
+    // TODO filter out point distance < 0.5
+
     LivoxPointXyzrtlt point;
     point.x = pkg.points[i].x;
     point.y = pkg.points[i].y;
@@ -352,7 +355,8 @@ void Lddc::InitPointcloud2Msg(const StoragePacket& pkg, PointCloud2& cloud, uint
   printf("Normal Points =======================%lu\n",(unsigned long)points.size());
 
   cloud.data.resize(points.size() * sizeof(LivoxPointXyzrtl));
-  memcpy(cloud.data.data(), points.data(), pkg.points_num * sizeof(LivoxPointXyzrtl));
+  memcpy(cloud.data.data(), points.data(), points.size() * sizeof(LivoxPointXyzrtl));
+  //memcpy(cloud.data.data(), points.data(), pkg.points_num * sizeof(LivoxPointXyzrtl));
 }
 
 void Lddc::PublishPointcloud2Data(const uint8_t index, const uint64_t timestamp, const PointCloud2& cloud) {

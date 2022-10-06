@@ -33,6 +33,13 @@ int main(int argc, char** argv)
         {
             sensor_msgs::PointCloud2::Ptr pc = m.instantiate<sensor_msgs::PointCloud2>();
             ROS_INFO("pointcloud2 size w <%d> h <%d>",pc->width,pc->height);
+            std::cout<< "fields[] " <<pc->fields.size()<< std::endl;
+            for (size_t i = 0; i < pc->fields.size(); ++i)
+            {
+                std::cout <<pc->fields[i].name;
+            }
+            std::cout<<std::endl;
+            break;
         }
     }
 
