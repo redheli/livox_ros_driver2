@@ -355,6 +355,8 @@ void Lddc::InitPointcloud2Msg(const StoragePacket& pkg, PointCloud2& cloud, uint
   printf("Normal Points =======================%lu\n",(unsigned long)points.size());
 
   cloud.data.resize(points.size() * sizeof(LivoxPointXyzrtl));
+  // update point number
+  cloud.width = points.size();
   memcpy(cloud.data.data(), points.data(), points.size() * sizeof(LivoxPointXyzrtl));
   //memcpy(cloud.data.data(), points.data(), pkg.points_num * sizeof(LivoxPointXyzrtl));
 }
