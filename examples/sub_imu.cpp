@@ -119,7 +119,7 @@ int main(int argc, char** argv)
 
     ros::NodeHandle n;
     
-    const std::string topic = "/imu_correct";
+    const std::string topic = "/imu_raw";
     ROS_INFO("sub %s",topic.c_str());
 
     ros::Subscriber sub = n.subscribe(topic, 2000, imuHandler, ros::TransportHints().tcpNoDelay());
