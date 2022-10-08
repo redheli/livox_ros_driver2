@@ -50,3 +50,21 @@ target_link_libraries(sub_pc
 	${catkin_LIBRARIES}
     ${PCL_LIBRARIES}
     )
+
+#------------------------------------
+add_executable(sub_imu sub_imu.cpp)
+
+#---------------------------------------------------------------------------------------
+# include file
+#---------------------------------------------------------------------------------------
+target_include_directories(sub_imu
+    PUBLIC
+    ${catkin_INCLUDE_DIRS}
+    ${PCL_INCLUDE_DIRS}
+    )
+
+target_link_libraries(sub_imu
+	${Boost_LIBRARY}
+	${catkin_LIBRARIES}
+    ${PCL_LIBRARIES}
+    )
