@@ -65,7 +65,7 @@ sensor_msgs::Imu imuConverter(const sensor_msgs::Imu& imu_in)
     if (sqrt(q_final.x()*q_final.x() + q_final.y()*q_final.y() + q_final.z()*q_final.z() + q_final.w()*q_final.w()) < 0.1)
     {
         ROS_ERROR("Invalid quaternion, please use a 9-axis IMU!");
-        ros::shutdown();
+        // ros::shutdown();
     }
 
     return imu_out;
@@ -100,7 +100,14 @@ void imuHandler(const sensor_msgs::Imu::ConstPtr& imuMsg)
 }
 int main(int argc, char** argv)
 {
-    ros::init(argc, argv, "sub_pc");
+
+    std::string imu_topic = "/livox/imu";
+    if (argc > 1){
+        imu_topic = std::string(argv[1]);
+    }
+    ROS_INFO("IMU Topic <%s>",imu_topic.c_str());
+
+    ros::init(argc, argv, "sub_imu");
 
 // lio sam imu extrinsic param
     // extrinsicRot: [-1, 0, 0,
@@ -119,10 +126,10 @@ int main(int argc, char** argv)
 
     ros::NodeHandle n;
     
-    const std::string topic = "/imu_raw";
-    ROS_INFO("sub %s",topic.c_str());
+    // const std::string topic = "/imu_raw";
+    // ROS_INFO("sub %s",topic.c_str());
 
-    ros::Subscriber sub = n.subscribe(topic, 2000, imuHandler, ros::TransportHints().tcpNoDelay());
+    ros::Subscriber sub = n.subscribe(imu_topic, 2000, imuHandler, ros::TransportHints().tcpNoDelay());
         // subImu        = nh.subscribe<sensor_msgs::Imu>(imuTopic, 2000, &ImageProjection::imuHandler, this, ros::TransportHints().tcpNoDelay());
 
     ros::spin();
