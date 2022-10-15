@@ -335,10 +335,27 @@ void Lddc::InitPointcloud2Msg(const StoragePacket& pkg, PointCloud2& cloud, uint
   #endif
 
   std::vector<LivoxPointXyzrtlt> points;
+  
+  // printf("Trying to check point tag =======================%lu\n",(unsigned long)pkg.points_num);
+  std::map<uint8_t,int> line_count; //k=line,v=point count
+  auto insertLine = [&line_count](auto l)
+  {
+    auto it = line_count.find(l);
+    if(it == line_count.end()){
+      line_count.insert(std::make_pair(l,1));
+    }
+    else{
+      it->second++;
+    }
+  };
+
   for (size_t i = 0; i < pkg.points_num; ++i) {
     //if(isTagNormal(pkg.points[i].tag) == false){
       //continue;
     //}
+
+    // count point of the line
+    //insertLine(pkg.points[i].line);
 
     // TODO filter out point distance < 0.5
 
@@ -353,7 +370,15 @@ void Lddc::InitPointcloud2Msg(const StoragePacket& pkg, PointCloud2& cloud, uint
     points.push_back(std::move(point));
   }
   printf("Normal Points =======================%lu\n",(unsigned long)points.size());
-
+  //static int max_count=0;
+  //for(auto const & it : line_count){
+  //  uint8_t l = it.first;
+  //  int c = it.second;
+  //  if(c>max_count){
+  //    max_count = c;
+  //  }
+  //  printf("line and count======%u,%d==max count ==%d\n",l,c,max_count);
+  //}
   cloud.data.resize(points.size() * sizeof(LivoxPointXyzrtl));
   // update point number
   cloud.width = points.size();
