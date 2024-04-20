@@ -4,6 +4,8 @@
 #include <std_msgs/Int32.h>
 #include <sensor_msgs/PointCloud2.h>
 
+#include "livox_def_common.h"
+
 // #include "/home/max/ws_livox/src/livox_ros_driver2/src/include/ros1_headers.h"
 
 // using PointCloud2 = sensor_msgs::PointCloud2;
