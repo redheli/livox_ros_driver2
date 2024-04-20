@@ -379,11 +379,11 @@ void Lddc::InitPointcloud2Msg(const StoragePacket& pkg, PointCloud2& cloud, uint
   //  }
   //  printf("line and count======%u,%d==max count ==%d\n",l,c,max_count);
   //}
-  cloud.data.resize(points.size() * sizeof(LivoxPointXyzrtl));
+  cloud.data.resize(points.size() * sizeof(LivoxPointXyzrtlt));
   // update point number
   cloud.width = points.size();
-  memcpy(cloud.data.data(), points.data(), points.size() * sizeof(LivoxPointXyzrtl));
-  //memcpy(cloud.data.data(), points.data(), pkg.points_num * sizeof(LivoxPointXyzrtl));
+  memcpy(cloud.data.data(), points.data(), points.size() * sizeof(LivoxPointXyzrtlt));
+  //memcpy(cloud.data.data(), points.data(), pkg.points_num * sizeof(LivoxPointXyzrtlt));
 }
 
 void Lddc::PublishPointcloud2Data(const uint8_t index, const uint64_t timestamp, const PointCloud2& cloud) {
