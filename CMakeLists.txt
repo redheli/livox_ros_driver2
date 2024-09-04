@@ -179,6 +179,21 @@ if(ROS_EDITION STREQUAL "ROS1")
     DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch_ROS1
   )
 
+  # sub_imu
+  add_executable(sub_imu examples/sub_imu.cpp)
+
+target_include_directories(sub_imu
+    PUBLIC
+    ${catkin_INCLUDE_DIRS}
+    # ${PCL_INCLUDE_DIRS}
+    )
+
+target_link_libraries(sub_imu
+	${Boost_LIBRARY}
+	${catkin_LIBRARIES}
+    # ${PCL_LIBRARIES}
+    )
+
   #---------------------------------------------------------------------------------------
   # end of CMakeList.txt
   #---------------------------------------------------------------------------------------

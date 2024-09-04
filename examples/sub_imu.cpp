@@ -73,7 +73,8 @@ sensor_msgs::Imu imuConverter(const sensor_msgs::Imu& imu_in)
 
 void imuHandler(const sensor_msgs::Imu::ConstPtr& imuMsg)
 {
-    sensor_msgs::Imu thisImu = imuConverter(*imuMsg);
+    // sensor_msgs::Imu thisImu = imuConverter(*imuMsg);
+    sensor_msgs::Imu thisImu = *imuMsg;
 
     // std::lock_guard<std::mutex> lock1(imuLock);
     // imuQueue.push_back(thisImu);
